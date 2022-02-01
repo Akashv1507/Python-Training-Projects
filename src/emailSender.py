@@ -3,7 +3,7 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email import encoders
-
+import os
 
 
 def sendEmail(appConfigDict, subject, html, attachmentFpaths = None) :
@@ -26,15 +26,15 @@ def sendEmail(appConfigDict, subject, html, attachmentFpaths = None) :
         # msg.attach(MIMEText(body, 'plain'))
         msg.attach(MIMEText(html, 'html'))
         
-        # if not(attachmentFpaths==None) and (len(attachmentFpaths)>0):
-        #     for filePath in attachmentFpaths:
-        #         fPath = cast(str, filePath)
-        #         part = MIMEBase('application', "octet-stream")
-        #         part.set_payload(open(fPath, "rb").read())
-        #         encoders.encode_base64(part)
-        #         part.add_header('Content-Disposition',
-        #                         'attachment; filename="{0}"'.format(os.path.basename(fPath)))
-        #         msg.attach(part)
+        if not(attachmentFpaths==None) and (len(attachmentFpaths)>0):
+            for filePath in attachmentFpaths:
+                # fPath = cast(str, filePath)
+                part = MIMEBase('application', "octet-stream")
+                part.set_payload(open(filePath, "rb").read())
+                encoders.encode_base64(part)
+                part.add_header('Content-Disposition',
+                                'attachment; filename="{0}"'.format(os.path.basename(filePath)))
+                msg.attach(part)
             
         text = msg.as_string()
         # Send the message via our SMTP server

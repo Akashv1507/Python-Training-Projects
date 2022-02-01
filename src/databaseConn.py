@@ -2,7 +2,7 @@
 # from .emailSender import sendEmail
 
 # root directory import/absolute import
-from src.emailSender import sendEmail
+from src.emailSenderImportEx import sendEmail
 
 def getDbConn():
     print('this is a db connection function')
