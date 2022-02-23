@@ -6,17 +6,15 @@ from email import encoders
 import os
 
 
-def sendEmail(appConfigDict, subject, html, attachmentFpaths = None) :
+def sendEmail(appConfigDict, subject, html, attachmentFpath = None) :
         """send mail to recepients
         Args:
             receiverAdressBook : list of target mail addresses
             subject : mail subject 
             html : mail body
-            attachmentFpaths : list of file path of attachment file
+            attachmentFpaths : file path of attachment file
         """
-        # listVar = ['akashverma@posoco.in', 'mayankv21@gmail.com']
-        # op='akashverma@posoco.inmayankv21@gmail.com'
-
+    
         isMailSent = False
         msg = MIMEMultipart()
         msg['From'] = appConfigDict['sendersMail']
@@ -26,15 +24,14 @@ def sendEmail(appConfigDict, subject, html, attachmentFpaths = None) :
         # msg.attach(MIMEText(body, 'plain'))
         msg.attach(MIMEText(html, 'html'))
         
-        if not(attachmentFpaths==None) and (len(attachmentFpaths)>0):
-            for filePath in attachmentFpaths:
-                # fPath = cast(str, filePath)
-                part = MIMEBase('application', "octet-stream")
-                part.set_payload(open(filePath, "rb").read())
-                encoders.encode_base64(part)
-                part.add_header('Content-Disposition',
-                                'attachment; filename="{0}"'.format(os.path.basename(filePath)))
-                msg.attach(part)
+        if not(attachmentFpath==None):
+            # fPath = cast(str, filePath)
+            part = MIMEBase('application', "octet-stream")
+            part.set_payload(open(attachmentFpath, "rb").read())
+            encoders.encode_base64(part)
+            part.add_header('Content-Disposition',
+                            'attachment; filename="{0}"'.format(os.path.basename(attachmentFpath)))
+            msg.attach(part)
             
         text = msg.as_string()
         # Send the message via our SMTP server

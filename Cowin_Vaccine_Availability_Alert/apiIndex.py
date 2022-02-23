@@ -35,6 +35,7 @@ currDate= startDate
 distIdsList = appConfig['districtIds']
 excelDumpPath = appConfig['availabilityExcelDumpPath']
 
+# to store all vaccine availabilty result for each district and for each date
 finalOpList =[]
 for distId in distIdsList:
     while currDate<=endDate:
@@ -44,15 +45,17 @@ for distId in distIdsList:
                 availableObj = {"date": centre['date'], "district_name":centre['district_name'], "block_name":centre['district_name'], "address":centre['address'], 
                 "fee_type":centre['fee_type'], "available_capacity":centre['available_capacity'], "available_capacity_dose1":centre['available_capacity_dose1'], "available_capacity_dose2":centre['available_capacity_dose2'],
                 "vaccine_name":centre['vaccine']}
-                if centre["allow_all_age"]=='false':
+    
+                if centre["allow_all_age"]==False:
                     availableObj['min_age_limit']= centre["min_age_limit"]
                     availableObj['max_age_limit']= centre["max_age_limit"]
-                elif centre["allow_all_age"]=='true':
+                elif centre["allow_all_age"]==True:
                     availableObj['min_age_limit']= centre["min_age_limit"]
                     availableObj['max_age_limit']= "NA"
+                    
                 finalOpList.append(availableObj)
         currDate = currDate + dt.timedelta(days=1)
     currDate= startDate
 
 # generating excel from finalOpList , which contain list of centre with other information
-generateAvailabilityExcel(finalOpList,excelDumpPath )
+generateAvailabilityExcel(finalOpList,excelDumpPath, startDate, endDate )
