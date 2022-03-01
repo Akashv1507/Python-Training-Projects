@@ -1,7 +1,7 @@
 import mysql.connector
 
-def createTbl(appConfig:dict):
-
+def insertMultipleRecord(appConfig:dict, values):
+    
     dbHost = appConfig["dbHost"]
     dbUser = appConfig["dbUser"]
     dbUserPass = appConfig["dbUserPass"]
@@ -15,17 +15,12 @@ def createTbl(appConfig:dict):
         # preparing a cursor object
         cursor = conn.cursor()
         
-        # creating table
-        studentRecord = """CREATE TABLE STUDENT (
-                        NAME  VARCHAR(20) NOT NULL,
-                        BRANCH VARCHAR(50),
-                        ROLL INT NOT NULL,
-                        SECTION VARCHAR(5),
-                        AGE INT
-                        )"""
+        #bind parameter
+        insertSql = "INSERT INTO STUDENT (NAME, BRANCH, ROLL, SECTION, AGE) VALUES (%s, %s, %s, %s, %s)"
         
-        # table created 
-        cursor.execute(studentRecord)
+        # to insert multiple record
+        cursor.executemany(insertSql, values)
+        conn.commit()
         if cursor:
             cursor.close()
         if conn:

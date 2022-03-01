@@ -1,6 +1,6 @@
 import mysql.connector
 
-def insertOneRecord(appConfig:dict, value):
+def fetchRecords(appConfig:dict, age:int, branch:str ):
     
     dbHost = appConfig["dbHost"]
     dbUser = appConfig["dbUser"]
@@ -16,11 +16,20 @@ def insertOneRecord(appConfig:dict, value):
         cursor = conn.cursor()
         
         #bind parameter
-        insertSql = "INSERT INTO STUDENT (NAME, BRANCH, ROLL, SECTION, AGE) VALUES (%s, %s, %s, %s, %s)"
+        fetchAllSql = "select * from student;"
+        cursor.execute(fetchAllSql)
+        allResult = cursor.fetchall()
+        print(allResult)
         
-        # to insert single record
-        cursor.execute(insertSql, value)
-        conn.commit()
+        # prone to sql injection attack
+        # fetchSql = f"select * from student where age < {age}"
+
+        #bind parameter
+        fetchSql = 'select * from student where age < %(bAge)s and branch = %(bBranch)s'
+        cursor.execute(fetchSql, {"bBranch":branch, "bAge": age})
+        myresult = cursor.fetchall()
+        print(myresult)
+
         if cursor:
             cursor.close()
         if conn:
