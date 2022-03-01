@@ -3,8 +3,9 @@ from src.createTbl import createTbl
 from src.insertOneRecord import insertOneRecord
 from src.insertMultipleRecord import  insertMultipleRecord
 from src.fetchRecords import fetchRecords
-import argparse
-
+from src.updateRecord import updateRecord
+from src.deleteRecord import deleteRecord
+from src.deleteMultipleUniqueRecord import deleteMultipleUniqueRecord
 
 # doing CRUD operation , C=create, R= read, U=update, D= delete
 appConfigDict =getAppConfigDict()
@@ -17,8 +18,14 @@ appConfigDict =getAppConfigDict()
 # values = [("multiple record 1", "MA", "19", "A", "322"),("multiple record 2", "BSC", "29", "B", "12")]
 # insertMultipleRecord(appConfigDict, values)
 
-fetchRecords(appConfigDict, 25, "CE")
+# fetchRecords(appConfigDict, 25, "CE")
 
+# updateRecord(appConfigDict, "Aman", "Msc")
+
+# deleteRecord(appConfigDict, "Aman")
+
+# delList =[("Akash",24),("Alisha",26),("Aman",28)]
+# deleteMultipleUniqueRecord(appConfigDict, delList)
 
 
 
