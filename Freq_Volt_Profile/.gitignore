@@ -1,3 +1,5 @@
 config.json
 project_env
 report.pdf
+__pycache__/
+ *.pyc
