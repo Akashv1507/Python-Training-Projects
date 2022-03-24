@@ -9,8 +9,9 @@ def createRawFreq(startDate:dt.datetime, endDate:dt.datetime, appConfig:Dict)->b
     dbUser = appConfig["dbUser"]
     dbUserPass = appConfig["dbUserPass"]
     dbName = appConfig["dbName"]
+    excelFilePath = appConfig["RawExcelPath"]
 
-    obj_rawFreqDataCreator = RawFreqDataCreator(dbHost, dbUser, dbUserPass, dbName)
+    obj_rawFreqDataCreator = RawFreqDataCreator(dbHost, dbUser, dbUserPass, dbName, excelFilePath)
 
     currDate = startDate
 
