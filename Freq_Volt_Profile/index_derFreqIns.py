@@ -2,9 +2,9 @@ import argparse
 from datetime import datetime as dt
 from datetime import timedelta
 from src.appConfig import getAppConfigDict
-from src.rawFreq.rawFreqCreation import createRawFreq
-
-
+from src.derFreq.derFreqCreation import createDerFreq
+import warnings
+warnings.filterwarnings("ignore")
 
 configDict=getAppConfigDict()
 
@@ -26,10 +26,10 @@ endDate = endDate.replace(hour=0, minute=0, second=0, microsecond=0)
 
 print(f'startDate = {startDate}, endDate = {endDate}')
 
-# create raw freq between start and end dates
-isRawFreqCreationSuccess = createRawFreq(startDate,endDate,configDict)
+# create derived freq between start and end dates
+isDerFreqCreationSuccess = createDerFreq(startDate,endDate,configDict)
 
-if isRawFreqCreationSuccess:
-    print('raw freq data creation done...')
+if isDerFreqCreationSuccess:
+    print('Derived freq data creation done...')
 else:
-    print('raw freq data creation failure...')
+    print('Derived freq data creation failure...')
